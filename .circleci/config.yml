@@ -10,6 +10,9 @@ jobs:
       - run:
           name: Install Python Dependencies
           command: |
+            pip install venv
+            python3 venv .env
+            source .env/bin/activate
             pip install --user --no-cache-dir -r requirements.txt
       - run:
           name: Run Tests
@@ -29,13 +32,13 @@ jobs:
       - docker/build:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           extra_build_args: "-t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME"
-          tag: 0.1.<< pipeline.number >>             
+          tag: "0.1.0"        
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: "latest"
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-          tag: "0.1.<< pipeline.number >>"
+          tag: "0.1.0"
 workflows:
   test_build_deploy:
     jobs:
