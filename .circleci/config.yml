@@ -25,14 +25,13 @@ jobs:
             pip install --user --no-cache-dir -r requirements.txt          
             ~/.local/bin/pyinstaller -F hello_world.py
       - setup_remote_docker
-      - docker/check
+      - docker/check:
+          docker-username: DOCKER_LOGIN
+          docker-password: DOCKER_PASSWORD
       - docker/build:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           extra_build_args: "-t $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME"
           tag: "0.1.0"
-          auth:
-            username: $DOCKER_LOGIN
-            password: $DOCKER_PASSWORD
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: "latest"
@@ -40,9 +39,8 @@ jobs:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: "0.1.0"
 workflows:
-  test_build_deploy:
+  build_deploy:
     jobs:
-      - build_test
       - build_push_docker_image:
           requires:
             - build_test
