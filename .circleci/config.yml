@@ -43,4 +43,4 @@ workflows:
     jobs:
       - build_push_docker_image:
           requires:
-            - build_test
+            - build
