@@ -10,9 +10,6 @@ jobs:
       - run:
           name: Install Python Dependencies
           command: |
-            pip install venv
-            python3 venv .env
-            source .env/bin/activate
             pip install --user --no-cache-dir -r requirements.txt
       - run:
           name: Run Tests
