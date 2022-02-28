@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   docker: circleci/docker@1.5.0
 jobs:
-  build_test:
+  build:
     docker:
       - image: circleci/python:3.9 
     steps:
@@ -41,6 +41,7 @@ jobs:
 workflows:
   build_deploy:
     jobs:
+      - build
       - build_push_docker_image:
           requires:
-            - build_test
+            - build
